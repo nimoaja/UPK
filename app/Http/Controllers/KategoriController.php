@@ -5,27 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Kategoriproduk;
 use Illuminate\Http\Request;
 
-class KategoriProdukController extends Controller
+class KategoriController extends Controller
 {
-    public function kategori_produks()
+    public function kategoriproduks()
     {
         $kategori = Kategoriproduk::all();
+        // return $kategori;
         return view('kategori.kategori', compact('kategori'));
     }
 
-    public function kategore(Request $request)
+    public function store(Request $request)
     {
+
         // Validate the incoming request data
         $request->validate([
-            'kategori' => 'required|string',
-            'satuan' => 'required',
-            // Add other validation rules as needed
+            'nama_kategori' => 'required|string',
         ]);
 
         // Store the data in the database using the Kategoriproduk model
         Kategoriproduk::create([
-            'kategori' => $request->kategori,
-            'satuan' => $request->satuan,
+            'nama_kategori' => $request->nama_kategori,
         ]);
 
         // Optionally, you can redirect back or return a response
@@ -36,35 +35,24 @@ class KategoriProdukController extends Controller
     {
         // Validate the incoming request data
         $request->validate([
-            'kategori' => 'required|string',
-            'satuan' => 'required',
-            // Add other validation rules as needed
+            'nama_kategori' => 'required|string',
         ]);
 
         $kategori = Kategoriproduk::find($id);
 
         // Update the data in the database using the Kategoriproduk model
         $kategori->update([
-            'kategori' => $request->kategori,
-            'satuan' => $request->satuan,
+            'nama_kategori' => $request->nama_kategori,
         ]);
 
         // Optionally, you can redirect back or return a response
         return redirect()->route('kategoriproduk')->with('success', 'Data berhasil diekspor ke database');
     }
 
-    public function kategori($id)
+    public function deleteKategori($id)
     {
-        $kategori = Kategoriproduk::find($id);
+        $kategori = Kategoriproduk::find($id)->delete();
 
-        if (!$kategori) {
-            // If data not found
-            return redirect()->back()->with('error', 'Data kategori produk tidak ditemukan');
-        }
-
-        $kategori->delete();
-
-        // Redirect to the category page with success message
-        return redirect()->route('kategoriproduk')->with('success', 'Data kategori produk berhasil dihapus');
+        return redirect()->route('kategoriproduk')->with('success', 'Data berhasil dihapus');
     }
 }
