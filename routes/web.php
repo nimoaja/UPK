@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KategoriProdukController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\penjualanController;
@@ -47,7 +48,7 @@ Route::post('stokkeluar', [stokkeluarController::class, 'stokkeluar'])->name('ke
 Route::put('/editstokkeluar/{id}', [stokkeluarController::class, 'updatestokkeluar'])->name('stokkeluarupdate');
 Route::delete('/hapusstokkeluar/{id}', [stokkeluarController::class, 'hapusstokkeluar'])->name('hapusstokkeluar');
 
-Route::get('/kategori', [KategoriProdukController::class, 'kategoriproduks'])->name('kategoriproduk');
-Route::post('/kategori', [KategoriProdukController::class, 'produk'])->name('kategori');
-Route::put('/editkategori/{id}', [KategoriProdukController::class, 'updateproduk'])->name('kategoriupdate');
-Route::delete('/hapuskategori/{id}', [KategoriProdukController::class, 'hapuskategori'])->name('hapuskategori');
+Route::get('/kategori', [KategoriController::class, 'kategoriproduks'])->name('kategoriproduk');
+Route::post('/tambah-kategori', [KategoriController::class, 'store'])->name('tambahKategori');
+Route::post('/editkategori/{id}', [KategoriController::class, 'updatekategori'])->name('kategoriupdate');
+Route::get('/hapuskategori/{id}', [KategoriController::class, 'deleteKategori'])->name('hapuskategori');
